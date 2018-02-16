@@ -1,27 +1,24 @@
 package edu.csci340.web.server;
-
-
-        import edu.csci340.web.EndSystem;
-        import edu.csci340.web.util.StringUtility;
-
-        import java.io.*;
-        import java.net.Socket;
-
+import edu.csci340.web.EndSystem;
+import edu.csci340.web.util.StringUtility;
+import java.io.*;
+import java.net.Socket;
 
 public final class HttpServer implements Runnable, EndSystem {
     private Socket client;
     private final String crlf = "\r\n";
 
 
-
-
     public HttpServer(Socket client) {
         this.client = client;
     }
 
+
+    // the run function of the thread class
     @Override
     public void run() {
         try {
+            // do stuff...
             processRequest();
         } catch(Exception e) {
             e.printStackTrace();
@@ -33,6 +30,7 @@ public final class HttpServer implements Runnable, EndSystem {
 
     // where most of the processing will take place...
     private void processRequest() throws Exception {
+        // set up the client...
         InputStreamReader clientInputStreamReader = new InputStreamReader(client.getInputStream());
         DataOutputStream clientDataOutputStream = new DataOutputStream(client.getOutputStream());
         BufferedReader fromClient = new BufferedReader(clientInputStreamReader);
@@ -41,12 +39,9 @@ public final class HttpServer implements Runnable, EndSystem {
         String requestHeader = null;
         // read each line of the header
         while ((requestHeader = fromClient.readLine()).length() != 0) {
-
+            // print it
             System.out.println(requestHeader + crlf);
-
         }
-        System.out.println("REQUEST => " + request);
-        String method = StringUtility.getMethod(request);
         String url = StringUtility.getUrl(request);
         url = "." + url;
         // check to see if the url is valid...
@@ -70,6 +65,7 @@ public final class HttpServer implements Runnable, EndSystem {
             contentTypeLine = "ContentType: text/html" + crlf;
             entityBody = StringUtility.notFoundEntityBody();
         }
+        System.out.println("Writing...");
         // write status...
         clientDataOutputStream.writeBytes(statusLine);
         // write content type...
@@ -100,6 +96,7 @@ public final class HttpServer implements Runnable, EndSystem {
 
 
     private static String contentType(String fileName) {
+        // for handling mime types
         if(fileName.endsWith(".htm") || fileName.endsWith(".html")) {
             return "text/html";
         }
@@ -111,7 +108,6 @@ public final class HttpServer implements Runnable, EndSystem {
         }
         return "application/octet-stream";
     }
-
 
 
     private void preventDefault() {

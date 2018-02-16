@@ -12,12 +12,14 @@ public class Main {
         try {
             final int port = 1180;
             ServerSocket serverSocket = new ServerSocket(port);
-            TcpClient tcpClient = new TcpClient("www.cs.xu.edu/csci340/17s/hereIAm.html", "theNewFile.html", 80);
-            tcpClient.outToFile();
+            // TcpClient tcpClient = new TcpClient(arg[0], arg[1])
+            TcpClient tcpClient = new TcpClient("HEAD","www.cs.xu.edu/csci340/17s/hereIAm.html", "theNewFile.html", 80);
+            tcpClient.delegate();
             while(true) {
-                System.out.println("Running server...");
+                System.out.println("Starting server...");
                 Socket socket = serverSocket.accept();
                 HttpServer httpRequest = new HttpServer(socket);
+                // thread
                 Thread thread = new Thread(httpRequest);
                 thread.start();
             }

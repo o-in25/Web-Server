@@ -1,6 +1,8 @@
 package edu.csci340.web.util;
 
+// utility functions
 public class StringUtility {
+    // get the host
     public static String formatHostString(String str) {
         return str.substring(0, str.indexOf('/'));
     }
@@ -21,8 +23,8 @@ public class StringUtility {
         return str.split(" ")[1].split("/");
     }
 
-
     public static String notFoundEntityBody() {
         return "<html>" + "<head><title>404Not Found</title></head>" + "<body>Page Not Found...</body></html>";
     }
+
 }
