@@ -23,6 +23,6 @@ public class StringUtility {
 
 
     public static String notFoundEntityBody() {
-        return "<HTML>" + "<HEAD><TITLE>Not Found</TITLE><style>.bottom{position:absolute;bottom:0;}</style></HEAD>" + "<BODY><center><img class='bottom'/></center></BODY></HTML>";
+        return "<html>" + "<head><title>404Not Found</title></head>" + "<body>Page Not Found...</body></html>";
     }
 }
